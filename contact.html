@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Contact</title>
+  <meta charset="utf-8">
+  <link type="text/css" rel="stylesheet" href="styles/style.css" />
+  <script src="js/jquery-1.10.2.min.js"></script>
+</head>
+<body class="page">
+<div id="wrap">
+  <div id="header">
+    <h1><a href="#">Graham Le</a></h1>
+    <div id="nav">
+      <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="articles.html">Articles</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="biography.html">Bio</a></li>
+        <li class="current_page_item"><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="main">
+    <div id="contact-details">
+      <h3 class="title">小伙伴们快来吧！</h3>
+      <p>大家是不是以为右边的表单可以给我发邮件？？^_^   那就too young, too simple了 -_-注意了，直接找个可以发邮箱的，or call me maybe ^-^</p>
+      <h3>联系方式</h3>
+      <h4>Phone: <span>+86-186-5975-2664</span></h4>
+      <h4>Email: <span>yinhuang@mail.ustc.edu.cn</span></h4>
+    </div>
+    <!--end contact-details-->
+    <div id="contact-form-container">
+      <form id="contact-form" method="post" action="#">
+        <fieldset>
+          <input id="form_name" type="text" name="name" value="Name" onFocus="if(this.value=='Name'){this.value=''};" onBlur="if(this.value==''){this.value='Name'};" />
+          <input id="form_email" type="text" name="email" value="Email" onFocus="if(this.value=='Email'){this.value=''};" onBlur="if(this.value==''){this.value='Email'};" />
+          <input id="form_subject" type="text" name="subject" value="Subject" onFocus="if(this.value=='Subject'){this.value=''};" onBlur="if(this.value==''){this.value='Subject'};" />
+          <textarea id="form_message" rows="10" cols="40" name="message"></textarea>
+          <input id="form_submit" class="submit" type="submit" name="submit" value="Submit &raquo;" />
+          <div class="hide">
+            <label>不要填呀~~</label>
+            <input name="spam_check" type="text" value="" />
+          </div>
+        </fieldset>
+      </form>
+    </div>
+
+  </div>
+
+  <div id="footer">
+    <p class="copyright">Copyright &copy; <a href="#">左银右煌</a> - All Rights Reserved</p>
+    <p class="github">
+      <a href="https://github.com/GrahamLe">github @GrahamLe &rarr;</a>
+    </p>
+  </div>
+</div>
+</body>
+</html>
