@@ -603,3 +603,11 @@ em{
 #second_para {
     margin: 0 0 0 40px;
 }
+
+/*css for article content*/
+.article_content {
+    margin-top: 80px;
+}
+.article_content ul {
+    list-style: circle;
+}

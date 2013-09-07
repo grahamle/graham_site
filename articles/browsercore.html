@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+<head>
+  <title>Browser Core</title>
+  <meta charset="utf-8">
+  <script src="../js/jquery-1.10.2.min.js"></script>
+  <link type="text/css" rel="stylesheet" href="../styles/style.css" />
+  <style>
+    strong{color: #ac2b2b;}
+  </style>
+</head>
+<body class="page">
+<div id="wrap">
+  <div id="header">
+    <h1><a href="#">Graham Le</a></h1>
+    <div id="nav">
+      <ul class="menu">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../projects.html">Projects</a></li>
+        <li class="current_page_item"><a href="../articles.html">Articles</a></li>
+        <li><a href="../portfolio.html">Portfolio</a></li>
+        <li><a href="../biography.html">Bio</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="article_content">
+    <h1 id="_1">也来谈谈我理解的浏览器渲染</h1>
+    <p>首先定义几个问题：</p>
+    <ul>
+    <li>浏览器的渲染引擎到底包括哪些部分？</li>
+    <li>是否对html、css、js每一个就有一个对应的parser？</li>
+    <li>所谓的解析器、解释器、编译器及渲染引擎这N者的称谓到底有何不同？</li>
+    <li>能够简单又清晰地说清楚浏览器渲染过程么？</li>
+    </ul>
+    <p>下面我就一个个问题，逐个击破，尝试解释我自己的理解。</p>
+    <h2 id="_2">浏览器的构成</h2>
+    <p>对于第一个问题，我们要回答就必须要了解浏览器的构成。从两个角度看：</p>
+    <ul>
+    <li>对于普通用户来讲，浏览器就是拥有 <strong>地址栏 | 标签栏 | 各个按钮</strong> 等的一个工具</li>
+    <li>对于浏览器本身来讲，上面所讲的只是它暴露在用户面前的 <strong>UI接口</strong> 而已，而且有趣的是，这些UI接口没有一个统一的标准，但各大浏览器vendors也都实现的很统一；那么除了这个UI接口，浏览器往内还有很多部件，请看下图：</li>
+    </ul>
+    <p><img alt="浏览器构成" src="img/arch.png" /></p>
+    <p>仔细观察上图，我们会发现大致分为四层，共七个部件（ <strong>并非计算机网络的OSI七层模型</strong> ）：</p>
+    <ul>
+    <li>UI层： 最上层就是browser暴露给用户的UI界面</li>
+    <li>"browser engine"视为中间层，我将其视为用户对UI界面操作的代理层，对以下将要发生的渲染任务或是数据存储进行统一安排</li>
+    <li><strong>渲染引擎</strong>：这就是最重要最核心的地带，根据查阅了许多资料发现，它是集HTML解析与CSS解析于一体的</li>
+    <li>网络部件：该图中的箭头目前我还有疑惑，理论上讲网络是为了发起http请求等，例如请求css样式表等，目前我只能理解为在渲染的第一阶段，即<strong> DOM树建立阶段 </strong>，渲染引擎发现一个<link>标签，需要去请求相应的样式文件，所以将相应的任务委托给Network部件去调用，（此时就会出现所谓的<strong> 阻滞 </strong>），文件加载完毕后，Network部件又将控制权返还给渲染引擎，所以上图中需要加个从网络部件到渲染引擎的箭头；同理，js文件也如此</li>
+    <li>JS解释器：在DOM树及样式规则树构建完毕后，JS解释器对脚本进行解释，然后通过DOM API以及CSSOM API来对以上两棵树进行操作，完毕后，控制权回到渲染引擎</li>
+    <li>UI后端：在渲染引擎完成渲染树构建及布局之后，对其进行调用，往页面上进行Paint；至于图中所绘从UI前端直接往后端的箭头，目前不明所以</li>
+    </ul>
+    <p>经过对浏览器构成的了解，我们发现第一个问题和第二个问题同时有了答案：</p>
+    <p><em>渲染引擎和JS解释器（或者叫解析器）是不一样的部件，不存在对CSS或HTML单独的解析器，而是渲染引擎干了HTML和CSS的解析工作，JS解析器干了对脚本的解析。举个例子，chrome中WebKit是渲染引擎，负责排版呀渲染之类的事，而chrome的V8引擎，是实实在在的对JS脚本进行解析，也可以称为编译，因为它将JS代码编译为机器码</em></p>
+    <h2 id="_3">几个易混淆的概念</h2>
+    <p>Parser | Interpreter | Compiler | Rendering Engine，对于这四者的区别，先说说前三者。</p>
+    <ul>
+    <li>经过上面的一场腥风血雨，我们知道，在前端中，至少我看来，分两种情况：<ul>
+    <li>对HTML和CSS没有编译一说，解析 = 解释</li>
+    <li>对JS来说，可以讲编译，也可以说解释或解析，但是个人认为由于JS天生是所谓的解释性语言，虽然现在越来越多的往一种工厂式语言走，但是还是说解释比较恰当</li>
+    </ul>
+    </li>
+    <li>对于渲染引擎，这是相对于浏览器来讲的一个词，所以并非针对语言来说，渲染引擎如上所述，只是浏览器构成的一部分，当然，是最重要的一部分</li>
+    </ul>
+    <h2 id="_4">浏览器渲染过程 -- 冲击波版本</h2>
+    <p>To be continued ...</p>
+  </div>
+  <div id="footer">
+    <p class="copyright">Copyright &copy; <a href="#">左银右煌</a> - All Rights Reserved</p>
+    <p class="github">
+      <a href="https://github.com/GrahamLe">github @GrahamLe &rarr;</a>
+    </p>
+  </div>
+</div>
+</body>
+</html>
