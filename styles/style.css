@@ -611,3 +611,19 @@ em{
 .article_content ul {
     list-style: circle;
 }
+
+/*css for project poster*/
+#project-header-b {
+    clear: both;
+}
+#project-header-b h3{
+    float: left;
+    padding: 10px 10px;
+
+}
+.pic-type {
+    clear:both;
+}
+.pic-type ul li{
+    float: left;
+}
