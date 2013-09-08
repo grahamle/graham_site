@@ -624,6 +624,9 @@ em{
 .pic-type {
     clear:both;
 }
+.pic-type li {
+    padding: 0 10px;
+}
 .pic-type ul li{
     float: left;
 }
