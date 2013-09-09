@@ -630,3 +630,11 @@ em{
 .pic-type ul li{
     float: left;
 }
+
+/*css for article characterist*/
+#summary {
+    width: 500px;
+}
+#summary + img {
+    float: right;
+}
