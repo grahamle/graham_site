@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>would this work</title>
-	<meta charset="utf-8" />
-</head>
-<body>
-	<h2>Thanks github</h2>
-	<p>I dont know if this is gonna work</p>
-</body>
-</html>
+---
+layout: default
+title: Graham's Blog
+---
+
+<h2>{{ page.title }}</h2>
+<p>最新文章</p>
+<ul>
+	{% for post in site.posts %}
+		<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+	{% endfor %}
+</ul>
